@@ -52,6 +52,8 @@ router.get('/available-slots', appointmentController.getAvailableSlots);
 router.get('/user/:userId', appointmentController.getUserAppointments);
 // Update appointment status
 router.patch('/status/:id', appointmentController.updateAppointmentStatus);
+// Update meeting link for telehealth appointment (doctor only)
+router.patch('/meeting-link/:id', (0, auth_middleware_1.authorize)([user_model_1.UserRole.DOCTOR]), appointmentController.updateMeetingLink);
 // Admin and nurse routes
 router.get('/', (0, auth_middleware_1.authorize)([user_model_1.UserRole.ADMIN, user_model_1.UserRole.NURSE]), appointmentController.getAllAppointments);
 // Get appointment by ID (must be after other specific routes)

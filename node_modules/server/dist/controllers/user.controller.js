@@ -301,8 +301,10 @@ const updateUserProfile = async (req, res) => {
                 user.emergencyContact = emergencyContact;
             if (bloodType !== undefined)
                 user.bloodType = bloodType;
-            if (allergies !== undefined)
-                user.allergies = allergies;
+            if (allergies !== undefined) {
+                // Handle allergies - ensure it's an array or set to empty array if undefined
+                user.allergies = Array.isArray(allergies) ? allergies : (allergies ? [allergies] : []);
+            }
         }
         console.log('Saving updated user data...');
         await user.save();

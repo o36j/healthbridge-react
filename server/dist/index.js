@@ -21,6 +21,7 @@ const admin_routes_1 = __importDefault(require("./routes/admin.routes"));
 const message_routes_1 = __importDefault(require("./routes/message.routes"));
 const notification_routes_1 = __importDefault(require("./routes/notification.routes"));
 const chatbot_routes_1 = __importDefault(require("./routes/chatbot.routes"));
+const medication_routes_1 = __importDefault(require("./routes/medication.routes"));
 // Load environment variables
 dotenv_1.default.config();
 // Set NODE_ENV to development if not set
@@ -82,6 +83,7 @@ app.use('/api/admin', admin_routes_1.default);
 app.use('/api/messages', message_routes_1.default);
 app.use('/api/notifications', notification_routes_1.default);
 app.use('/api/chatbot', chatbot_routes_1.default);
+app.use('/api/medications', medication_routes_1.default);
 // Root route
 app.get('/', (_req, res) => {
     res.status(200).json({

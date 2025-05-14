@@ -33,62 +33,29 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppointmentStatus = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-var AppointmentStatus;
-(function (AppointmentStatus) {
-    AppointmentStatus["PENDING"] = "pending";
-    AppointmentStatus["CONFIRMED"] = "confirmed";
-    AppointmentStatus["CANCELLED"] = "cancelled";
-    AppointmentStatus["COMPLETED"] = "completed";
-    AppointmentStatus["RESCHEDULED"] = "rescheduled";
-})(AppointmentStatus || (exports.AppointmentStatus = AppointmentStatus = {}));
-const appointmentSchema = new mongoose_1.Schema({
-    patient: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-    },
-    doctor: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-    },
-    date: {
-        type: Date,
-        required: true,
-    },
-    startTime: {
+const medicationSchema = new mongoose_1.Schema({
+    name: {
         type: String,
         required: true,
+        unique: true,
+        trim: true,
     },
-    endTime: {
+    description: {
         type: String,
-        required: true,
+        trim: true,
     },
-    status: {
-        type: String,
-        enum: Object.values(AppointmentStatus),
-        default: AppointmentStatus.PENDING,
-    },
-    reason: {
-        type: String,
-        required: true,
-    },
-    notes: {
-        type: String,
-    },
-    attachments: {
+    warnings: {
         type: [String],
         default: [],
     },
-    isVirtual: {
-        type: Boolean,
-        default: false,
+    sideEffects: {
+        type: [String],
+        default: [],
     },
-    meetingLink: {
-        type: String,
-    },
+    dosageForm: String,
+    strength: String,
+    manufacturer: String,
     createdBy: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'User',
@@ -99,5 +66,7 @@ const appointmentSchema = new mongoose_1.Schema({
         ref: 'User',
     },
 }, { timestamps: true });
-const Appointment = mongoose_1.default.model('Appointment', appointmentSchema);
-exports.default = Appointment;
+// Create a text index for search functionality
+medicationSchema.index({ name: 'text', description: 'text' });
+const Medication = mongoose_1.default.model('Medication', medicationSchema);
+exports.default = Medication;

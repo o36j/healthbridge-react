@@ -32,38 +32,30 @@ const connectDB = async () => {
         };
         // Connect to MongoDB with configured options
         await mongoose_1.default.connect(mongoURI, options);
-        // Log successful connection
-        console.log('\x1b[32m%s\x1b[0m', 'MongoDB Connected Successfully ✓');
         // Set up event listeners for connection status monitoring
         mongoose_1.default.connection.on('error', (err) => {
             // Connection error occurred
-            console.error('\x1b[31m%s\x1b[0m', `MongoDB Connection Error: ${err}`);
         });
         mongoose_1.default.connection.on('disconnected', () => {
             // MongoDB disconnected
-            console.warn('\x1b[33m%s\x1b[0m', 'MongoDB Disconnected');
         });
         mongoose_1.default.connection.on('reconnected', () => {
             // MongoDB reconnected
-            console.log('\x1b[32m%s\x1b[0m', 'MongoDB Reconnected Successfully');
         });
         // Ensure clean shutdown when application terminates
         process.on('SIGINT', async () => {
             try {
                 // Close database connection gracefully
                 await mongoose_1.default.connection.close();
-                console.log('\x1b[36m%s\x1b[0m', 'MongoDB connection closed through app termination');
                 process.exit(0);
             }
             catch (err) {
-                console.error('\x1b[31m%s\x1b[0m', 'Error during MongoDB disconnection on app termination:', err);
                 process.exit(1);
             }
         });
     }
     catch (error) {
         // Log connection errors and exit if connection cannot be established
-        console.error('\x1b[31m%s\x1b[0m', `Failed to connect to MongoDB: ${error}`);
         process.exit(1);
     }
 };

@@ -44,6 +44,7 @@ const vitalsSchema = new mongoose_1.Schema({
     oxygenSaturation: Number,
 });
 const prescriptionSchema = new mongoose_1.Schema({
+    medicationId: mongoose_1.Schema.Types.ObjectId,
     medication: {
         type: String,
         required: true,
@@ -61,6 +62,9 @@ const prescriptionSchema = new mongoose_1.Schema({
         required: true,
     },
     notes: String,
+    warnings: [String],
+    sideEffects: [String],
+    showWarningsToPatient: Boolean,
 });
 const patientHistorySchema = new mongoose_1.Schema({
     patient: {
