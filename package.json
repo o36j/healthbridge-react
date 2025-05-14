@@ -15,7 +15,8 @@
     "build": "npm run build:server; npm run build:client",
     "build:client": "cd client; npm run build",
     "build:server": "cd server; npm run build",
-    "start": "cd server; npm start"
+    "start": "cd server; npm start",
+    "build:render": "npm run build:server && cd client && node build-render.js"
   },
   "keywords": [
     "react",
